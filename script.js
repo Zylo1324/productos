@@ -397,6 +397,15 @@ function registerEvents() {
   });
 }
 
+const integrationButton = document.getElementById("integrationButton");
+
+if (integrationButton) {
+  integrationButton.addEventListener("click", () => {
+    console.log("Botón Integración clicado");
+    // En el siguiente paso aquí abriremos el modal de contraseña
+  });
+}
+
 async function forwardGoogleCredential(credential) {
   const config = window.APP_CONFIG || {};
   if (!config.googleCallbackEndpoint) {
