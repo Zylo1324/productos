@@ -833,6 +833,29 @@
     </div>
   </div>
 
+  <!-- ===== Modal Contraseña de integración ===== -->
+  <div id="integrationPasswordDialog" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="integrationPasswordTitle">
+      <header>
+        <strong id="integrationPasswordTitle">Acceso a integraciones</strong>
+        <button class="btn ghost" id="integrationPasswordClose" type="button">Cerrar</button>
+      </header>
+      <div class="body">
+        <p>Ingresa la contraseña para acceder al apartado de integraciones.</p>
+        <input
+          type="password"
+          id="integrationPasswordInput"
+          placeholder="Contraseña"
+        />
+        <p id="integrationPasswordError" class="email-linker-error" role="alert"></p>
+        <div class="actions">
+          <button type="button" class="btn primary" id="integrationPasswordSubmit">Entrar</button>
+          <button type="button" class="btn ghost" id="integrationPasswordCancel">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== Modal Enlazar correo ===== -->
   <div id="emailLinkerModal" class="modal-backdrop" aria-hidden="true">
     <div class="modal email-linker-modal" role="dialog" aria-labelledby="emailLinkerTitle">
@@ -1877,11 +1900,18 @@ const btnForgot    = document.getElementById('btnForgot');
 const googleButtonContainer = document.getElementById('googleButton');
 const btnUserMenu = document.getElementById('btnUserMenu');
 const btnUserSettings = document.getElementById('btnUserSettings');
+const integrationButton = document.getElementById('integrationButton');
 const userConfigPanel = document.getElementById('userConfigPanel');
 const isUserConfigPanelHidden = () => userConfigPanel?.classList.contains('hidden') ?? true;
 const authUserShell = document.getElementById('authUserShell');
 const settingsModal = document.getElementById('settingsModal');
 const btnSettingsClose = document.getElementById('btnSettingsClose');
+const integrationPasswordDialog = document.getElementById('integrationPasswordDialog');
+const integrationPasswordClose = document.getElementById('integrationPasswordClose');
+const integrationPasswordCancel = document.getElementById('integrationPasswordCancel');
+const integrationPasswordSubmit = document.getElementById('integrationPasswordSubmit');
+const integrationPasswordInput = document.getElementById('integrationPasswordInput');
+const integrationPasswordError = document.getElementById('integrationPasswordError');
 settingsThemeOptions = Array.from(document.querySelectorAll('input[name="settingsTheme"]'));
 updateThemeControls();
 settingsThemeOptions.forEach((input)=>{
@@ -1916,6 +1946,34 @@ function closeSettingsModal(){
   }
 }
 
+let integrationPasswordReturnFocus = null;
+
+function openIntegrationPasswordDialog(){
+  if(!integrationPasswordDialog) return;
+  integrationPasswordReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  integrationPasswordDialog.classList.add('open');
+  integrationPasswordDialog.setAttribute('aria-hidden','false');
+  if(integrationPasswordError){ integrationPasswordError.textContent=''; }
+  if(integrationPasswordInput){
+    integrationPasswordInput.value='';
+    setTimeout(()=>integrationPasswordInput.focus({ preventScroll:true }),0);
+  }
+}
+
+function closeIntegrationPasswordDialog(){
+  if(!integrationPasswordDialog) return;
+  if(!integrationPasswordDialog.classList.contains('open')) return;
+  integrationPasswordDialog.classList.remove('open');
+  integrationPasswordDialog.setAttribute('aria-hidden','true');
+  if(integrationPasswordInput){ integrationPasswordInput.value=''; }
+  if(integrationPasswordError){ integrationPasswordError.textContent=''; }
+  const returnTarget = integrationPasswordReturnFocus;
+  integrationPasswordReturnFocus = null;
+  if(returnTarget && typeof returnTarget.focus === 'function'){
+    setTimeout(()=> returnTarget.focus({ preventScroll:true }),0);
+  }
+}
+
 btnUserMenu?.addEventListener('click', (event)=>{
   event.preventDefault();
   event.stopPropagation();
@@ -1931,6 +1989,13 @@ btnUserSettings?.addEventListener('click', (event)=>{
   openSettingsModal();
 });
 
+integrationButton?.addEventListener('click', (event)=>{
+  event.preventDefault();
+  event.stopPropagation();
+  setUserConfigPanelState(false);
+  openIntegrationPasswordDialog();
+});
+
 btnSettingsClose?.addEventListener('click', (event)=>{
   event.preventDefault();
   closeSettingsModal();
@@ -1940,6 +2005,31 @@ settingsModal?.addEventListener('click', (event)=>{
   if(event.target === settingsModal){
     closeSettingsModal();
   }
+});
+
+integrationPasswordDialog?.addEventListener('click', (event)=>{
+  if(event.target === integrationPasswordDialog){
+    closeIntegrationPasswordDialog();
+  }
+});
+
+integrationPasswordClose?.addEventListener('click', closeIntegrationPasswordDialog);
+integrationPasswordCancel?.addEventListener('click', closeIntegrationPasswordDialog);
+
+integrationPasswordSubmit?.addEventListener('click', ()=>{
+  const value = (integrationPasswordInput?.value || '').trim();
+  if(!integrationPasswordError) return;
+  if(!value){
+    integrationPasswordError.textContent = 'Por favor, escribe la contraseña.';
+    return;
+  }
+  if(value !== 'z.y.l.o-14'){
+    integrationPasswordError.textContent = 'Contraseña incorrecta.';
+    return;
+  }
+  integrationPasswordError.textContent = '';
+  closeIntegrationPasswordDialog();
+  console.log('Contraseña correcta, aquí abriremos el panel de Integraciones…');
 });
 
 document.addEventListener('click', (event)=>{
@@ -1953,6 +2043,11 @@ document.addEventListener('click', (event)=>{
 
 document.addEventListener('keydown', (event)=>{
   if(event.key !== 'Escape') return;
+  if(integrationPasswordDialog?.classList.contains('open')){
+    event.preventDefault();
+    closeIntegrationPasswordDialog();
+    return;
+  }
   if(settingsModal?.classList.contains('open')){
     event.preventDefault();
     closeSettingsModal();
