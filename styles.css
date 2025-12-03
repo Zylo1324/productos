@@ -498,8 +498,9 @@ input:focus {
 .integrations-layout {
   display: flex;
   gap: 24px;
-  min-width: 600px;
-  max-width: 800px;
+  min-width: 580px;
+  max-width: 720px;
+  align-items: flex-start;
 }
 
 .integrations-menu {
