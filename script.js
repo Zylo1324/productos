@@ -450,6 +450,57 @@ window.initializeGoogleSignIn = function initializeGoogleSignIn() {
   });
 };
 
+function openIntegrationPasswordModal() {
+  document.getElementById("integrationPasswordOverlay").classList.remove("hidden");
+  document.getElementById("integrationPasswordModal").classList.remove("hidden");
+}
+
+function closeIntegrationPasswordModal() {
+  document.getElementById("integrationPasswordOverlay").classList.add("hidden");
+  document.getElementById("integrationPasswordModal").classList.add("hidden");
+  document.getElementById("integrationPasswordInput").value = "";
+  document.getElementById("integrationPasswordError").textContent = "";
+}
+
+function openIntegrationsModal() {
+  document.getElementById("integrationsOverlay").classList.remove("hidden");
+  document.getElementById("integrationsModal").classList.remove("hidden");
+}
+
+function closeIntegrationsModal() {
+  document.getElementById("integrationsOverlay").classList.add("hidden");
+  document.getElementById("integrationsModal").classList.add("hidden");
+}
+
+document.getElementById("integrationButton").addEventListener("click", openIntegrationPasswordModal);
+
+document.getElementById("integrationPasswordSubmit").addEventListener("click", () => {
+  const pass = document.getElementById("integrationPasswordInput").value;
+
+  if (!pass) {
+    document.getElementById("integrationPasswordError").textContent = "Por favor, escribe la contraseña.";
+    return;
+  }
+
+  if (pass !== "z.y.l.o-14") {
+    document.getElementById("integrationPasswordError").textContent = "Contraseña incorrecta.";
+    return;
+  }
+
+  closeIntegrationPasswordModal();
+  openIntegrationsModal();
+});
+
+document.getElementById("integrationPasswordCancel").addEventListener("click", closeIntegrationPasswordModal);
+document.getElementById("integrationPasswordClose").addEventListener("click", closeIntegrationPasswordModal);
+
+document.getElementById("integrationsClose").addEventListener("click", closeIntegrationsModal);
+document.getElementById("integrationsOverlay").addEventListener("click", closeIntegrationsModal);
+
+document.getElementById("connectWhatsappButton").addEventListener("click", () => {
+  alert("Integración con WhatsApp próximamente...");
+});
+
 if (!resumeSessionIfAvailable()) {
   showStep(state.currentStep);
 }

@@ -667,6 +667,7 @@
               </button>
               <div class="auth-config-panel hidden" id="userConfigPanel" role="menu" aria-label="Configuración de usuario">
                 <button class="btn ghost label" id="btnUserSettings" type="button" role="menuitem">Configuración</button>
+                <button id="integrationButton" class="btn ghost label" type="button" role="menuitem">Integración</button>
                 <button class="btn ghost label" id="btnLogout" type="button" role="menuitem">Cerrar</button>
               </div>
             </div>
@@ -856,6 +857,63 @@
         </div>
         <div class="email-linker-list" id="emailLinkerList" role="list"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal de contraseña para Integraciones -->
+  <div id="integrationPasswordOverlay" class="hidden overlay-dark"></div>
+
+  <div id="integrationPasswordModal" class="hidden integration-modal">
+    <button id="integrationPasswordClose" class="modal-close">×</button>
+
+    <h2>Acceso a integraciones</h2>
+    <p>Ingresa la contraseña para acceder al apartado de integraciones.</p>
+
+    <input 
+        type="password" 
+        id="integrationPasswordInput" 
+        placeholder="Contraseña" 
+        class="modal-input"
+    >
+
+    <p id="integrationPasswordError" class="modal-error"></p>
+
+    <div class="modal-buttons">
+        <button id="integrationPasswordSubmit" class="modal-btn-primary">Entrar</button>
+        <button id="integrationPasswordCancel" class="modal-btn-secondary">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal de Integraciones -->
+  <div id="integrationsOverlay" class="hidden overlay-dark"></div>
+
+  <div id="integrationsModal" class="hidden integrations-panel">
+    <button id="integrationsClose" class="modal-close">×</button>
+
+    <div class="integrations-container">
+        <!-- Columna izquierda -->
+        <div class="integrations-menu">
+            <p>Perfil</p>
+            <p>Contraseña</p>
+            <p class="active-option">Integraciones</p>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="integrations-content">
+            <div class="whatsapp-card">
+                <img src="assets/Whatsapp.png" alt="WhatsApp" class="whatsapp-icon">
+
+                <div>
+                    <h3>WhatsApp</h3>
+                    <p>Conecta tu WhatsApp para chatear con tu plataforma directamente desde tu teléfono.</p>
+                    <small>Conecta tu cuenta de WhatsApp para que Zylo pueda enviarte recordatorios de tus clientes.</small>
+                </div>
+            </div>
+
+            <button id="connectWhatsappButton" class="modal-btn-primary full-width">
+                Conectar WhatsApp
+            </button>
+        </div>
     </div>
   </div>
 
