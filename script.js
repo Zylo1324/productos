@@ -406,6 +406,14 @@ if (integrationButton) {
   });
 }
 
+const connectWhatsappButton = document.getElementById("connectWhatsappButton");
+
+if (connectWhatsappButton) {
+  connectWhatsappButton.addEventListener("click", () => {
+    console.log("Conectar WhatsApp clicado (lógica se añadirá después)");
+  });
+}
+
 async function forwardGoogleCredential(credential) {
   const config = window.APP_CONFIG || {};
   if (!config.googleCallbackEndpoint) {
