@@ -653,7 +653,7 @@ input:focus {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-image: url("assets/Whatsapp.png");
+  background-image: url("assets/whatsapp.svg");
   background-size: cover;
   background-position: center;
 }
