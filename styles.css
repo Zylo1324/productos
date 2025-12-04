@@ -602,12 +602,12 @@ input:focus {
 .whatsapp-card-header {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .whatsapp-icon {
-  width: 40px;
-  height: 40px;
+  width: 22px;
+  height: 22px;
   object-fit: contain;
   flex-shrink: 0;
 }
