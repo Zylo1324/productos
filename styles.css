@@ -606,8 +606,8 @@ input:focus {
 }
 
 .whatsapp-icon {
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -650,8 +650,8 @@ input:focus {
 
 .whatsapp-connect-icon {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background-image: url("assets/whatsapp.svg");
   background-size: cover;
